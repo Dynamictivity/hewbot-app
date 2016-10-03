@@ -1,0 +1,31 @@
+#payment-form input {
+    width: auto;
+    display: inline;
+}
+
+#payment-form label {
+    display: inline;
+}
+
+#payment-form input.submit {
+    overflow: visible;
+    text-transform: none;
+    cursor: pointer; /* 3 */
+    background: #966600;
+    float: right;
+    text-transform: uppercase;
+    box-shadow: none;
+    color: #FFF;
+    padding: 10px;
+}
+
+#payment-form input.submit:hover, #payment-form input.submit:focus {
+    background: #BE840B;
+    box-shadow: none;
+}
+
+button[type="submit"] {
+    float: right;
+    text-transform: uppercase;
+    box-shadow: none;
+}

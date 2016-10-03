@@ -1,6 +1,6 @@
 cakephp:
   autoredeploy: true
-  image: 'travisrowland/hewbot-app:dev'
+  image: 'travisrowland/foundation-app'
   restart: always
   volumes:
     - /www
@@ -37,6 +37,9 @@ php:
     - EMAIL_TIMEOUT=30
     - EMAIL_TLS=True
     - EMAIL_USERNAME=support@dynamictivity.com
+    - 'DYN_SITE_URL=http://foundation.dynamictivity.com'
+    - 'DYN_SITE_NAME=Foundation App'
+    - RP_GOOGLE_ANALYTICS=UA-5187184-35
   expose:
     - '9000'
   image: 'travisrowland/dockercakephp_php:latest'

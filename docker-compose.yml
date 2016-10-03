@@ -31,8 +31,11 @@ services:
           EMAIL_USERNAME: 'support@dynamictivity.com'
           EMAIL_PASSWORD: '2CpbYjFX9NUbRjUVzvu8hw' # Test key, replace with your own
           EMAIL_TLS: 'True'
+          DYN_SITE_URL: 'http://localhost:8080'
+          DYN_SITE_NAME: 'Foundation App'
+          DYN_GOOGLE_ANALYTICS: 'UA-5187184-35'
     cakephp:
-        # image: travisrowland/hewbot-app:dev
+        # image: travisrowland/foundation-app
         build: .
         volumes:
             - /www
