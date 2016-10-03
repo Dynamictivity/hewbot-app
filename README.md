@@ -1,6 +1,9 @@
 # hewbot-app
 
-This is the website application which controls the orchestration of hewbot(s)
+This is the website application which controls the orchestration of hewbot(s) for http://hewbot.com
+
+## Docker Image
+You can pull the latest docker image from https://hub.docker.com/r/travisrowland/hewbot-app/
 
 ## Configuration
 
