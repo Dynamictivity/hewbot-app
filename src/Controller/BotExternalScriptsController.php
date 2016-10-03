@@ -24,13 +24,19 @@ class BotExternalScriptsController extends AppController
             if ($this->BotExternalScripts->save($botExternalScript)) {
                 $this->Flash->success(__('The bot external script has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'bots', 'action' => 'view', $botExternalScript->bot_id]);
             } else {
                 $this->Flash->error(__('The bot external script could not be saved. Please, try again.'));
             }
         }
-        $bots = $this->BotExternalScripts->Bots->find('list', ['limit' => 200]);
-        $externalScripts = $this->BotExternalScripts->ExternalScripts->find('list', ['limit' => 200]);
+        $bots = $this->BotExternalScripts->Bots->find('list',
+            ['conditions' => [
+                'Bots.user_id' => $this->Auth->user('id')
+            ]]);
+        $externalScripts = $this->BotExternalScripts->ExternalScripts->find('list',
+            ['order' => [
+                'ExternalScripts.name' => 'ASC'
+            ]]);
         $this->set(compact('botExternalScript', 'bots', 'externalScripts'));
         $this->set('_serialize', ['botExternalScript']);
     }
@@ -52,6 +58,6 @@ class BotExternalScriptsController extends AppController
             $this->Flash->error(__('The bot external script could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['controller' => 'bots', 'action' => 'view', $botExternalScript->bot_id]);
     }
 }

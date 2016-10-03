@@ -81,6 +81,8 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
+
+        $this->set('title', 'Hewbot.com');
     }
 
     /**
@@ -112,5 +114,11 @@ class AppController extends Controller
 
         // Default deny
         return false;
+    }
+
+    protected function _validateOwnership($userId) {
+        if ($userId !== $this->Auth->user('id')) {
+            throw new NotFoundException(__('Record not found'));
+        }
     }
 }

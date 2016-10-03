@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Network\Exception\NotFoundException;
 
 /**
  * Bots Controller
@@ -40,8 +41,10 @@ class BotsController extends AppController
     public function view($id = null)
     {
         $bot = $this->Bots->get($id, [
-            'contain' => ['Users', 'BotAdapters', 'BotExternalScripts']
+            'contain' => ['Users', 'BotAdapters', 'BotExternalScripts', 'BotExternalScripts.ExternalScripts']
         ]);
+
+        $this->_validateOwnership($bot->user_id);
 
         $this->set('bot', $bot);
         $this->set('_serialize', ['bot']);
@@ -65,9 +68,8 @@ class BotsController extends AppController
                 $this->Flash->error(__('The bot could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Bots->Users->find('list', ['limit' => 200]);
         $botAdapters = $this->Bots->BotAdapters->find('list', ['limit' => 200]);
-        $this->set(compact('bot', 'users', 'botAdapters'));
+        $this->set(compact('bot', 'botAdapters'));
         $this->set('_serialize', ['bot']);
     }
 
@@ -83,6 +85,9 @@ class BotsController extends AppController
         $bot = $this->Bots->get($id, [
             'contain' => []
         ]);
+
+        $this->_validateOwnership($bot->user_id);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $bot = $this->Bots->patchEntity($bot, $this->request->data);
             if ($this->Bots->save($bot)) {
@@ -93,9 +98,8 @@ class BotsController extends AppController
                 $this->Flash->error(__('The bot could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Bots->Users->find('list', ['limit' => 200]);
         $botAdapters = $this->Bots->BotAdapters->find('list', ['limit' => 200]);
-        $this->set(compact('bot', 'users', 'botAdapters'));
+        $this->set(compact('bot', 'botAdapters'));
         $this->set('_serialize', ['bot']);
     }
 
@@ -110,6 +114,9 @@ class BotsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $bot = $this->Bots->get($id);
+
+        $this->_validateOwnership($bot->user_id);
+
         if ($this->Bots->delete($bot)) {
             $this->Flash->success(__('The bot has been deleted.'));
         } else {

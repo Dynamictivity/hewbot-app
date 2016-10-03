@@ -18,6 +18,13 @@ class ExternalScriptsController extends AppController
      */
     public function index()
     {
+        $this->paginate = [
+            'contain' => [],
+            'order' => [
+                'ExternalScripts.name' => 'ASC'
+            ]
+        ];
+
         $externalScripts = $this->paginate($this->ExternalScripts);
 
         $this->set(compact('externalScripts'));
