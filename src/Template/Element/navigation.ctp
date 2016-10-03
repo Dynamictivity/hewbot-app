@@ -2,6 +2,10 @@
 use Cake\Core\Configure;
 ?>
 <?php if ($this->request->session()->read('Auth.User.id')): ?>
+    <li class="heading"><?= __('Hewbots') ?></li>
+    <li><?= $this->Html->link(__('List Bots'), ['controller' => 'Bots', 'action' => 'index']) ?></li>
+    <li><?= $this->Html->link(__('List External Scripts'), ['controller' => 'External Scripts', 'action' => 'index']) ?></li>
+
     <li class="heading"><?= __('Account') ?></li>
     <li><?= $this->Html->link(__('My Account'), ['controller' => 'Users', 'action' => 'account']) ?></li>
     <li><?= $this->Html->link(__('Change Password'), ['controller' => 'Users', 'action' => 'changePassword']) ?></li>
