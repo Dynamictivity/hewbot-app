@@ -1,0 +1,48 @@
+cakephp:
+  autoredeploy: true
+  image: 'travisrowland/hewbot-app:dev'
+  restart: always
+  volumes:
+    - /www
+db:
+  autoredeploy: true
+  environment:
+    - MYSQL_DATABASE=cakephp
+    - MYSQL_ROOT_PASSWORD=cakephp
+  image: 'mariadb:5.5'
+  restart: always
+nginx:
+  autoredeploy: true
+  image: 'travisrowland/dockercakephp_nginx:latest'
+  links:
+    - cakephp
+    - php
+  ports:
+    - '8184:80'
+  restart: always
+  volumes_from:
+    - cakephp
+php:
+  autoredeploy: true
+  environment:
+    - DB_DATABASE=cakephp
+    - DB_HOST=db
+    - DB_PASSWORD=cakephp
+    - DB_SEED=DatabaseSeed
+    - DB_USERNAME=root
+    - DEBUG=true
+    - EMAIL_HOST=smtp.mandrillapp.com
+    - EMAIL_PASSWORD=2CpbYjFX9NUbRjUVzvu8hw
+    - EMAIL_PORT=587
+    - EMAIL_TIMEOUT=30
+    - EMAIL_TLS=True
+    - EMAIL_USERNAME=support@dynamictivity.com
+  expose:
+    - '9000'
+  image: 'travisrowland/dockercakephp_php:latest'
+  links:
+    - cakephp
+    - db
+  restart: always
+  volumes_from:
+    - cakephp
