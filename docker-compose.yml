@@ -32,10 +32,10 @@ services:
           EMAIL_PASSWORD: '2CpbYjFX9NUbRjUVzvu8hw' # Test key, replace with your own
           EMAIL_TLS: 'True'
           DYN_SITE_URL: 'http://localhost:8080'
-          DYN_SITE_NAME: 'Foundation App'
+          DYN_SITE_NAME: 'Hewbot.com'
           DYN_GOOGLE_ANALYTICS: 'UA-5187184-35'
     cakephp:
-        # image: travisrowland/foundation-app
+        # image: travisrowland/hewbot-app
         build: .
         volumes:
             - /www

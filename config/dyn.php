@@ -3,7 +3,7 @@ return [
     'dyn' => [
         'namespace' => 'dyn',
         'site' => [
-            'name' =>               'Foundation App',
+            'name' =>               'Hewbot.com',
             'url' =>                env('DYN_SITE_URL', 'http://localhost:8765'),
         ],
         'support' => [

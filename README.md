@@ -1,6 +1,6 @@
-# foundation-app
+# hewbot-app
 
-This is our foundation application source-code for Dynamictivity
+This is the website application which controls the orchestration of hewbot(s)
 
 ## Configuration
 

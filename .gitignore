@@ -6,3 +6,5 @@
 /config/Migrations/*.lock
 .vagrant
 /webroot/files/
+/rundeck/
+/hewbot-docker/
