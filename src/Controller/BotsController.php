@@ -58,8 +58,14 @@ class BotsController extends AppController
     public function add()
     {
         $bot = $this->Bots->newEntity();
+        $botCount = $this->Bots->find()->count();
+        if ($botCount >= 1) {
+            $this->Flash->success(__('If you need additional bots, please send an e-mail to support@dynamictivity.com'));
+            return $this->redirect(['action' => 'index']);
+        }
         if ($this->request->is('post')) {
-            $bot = $this->Bots->patchEntity($bot, $this->request->data);
+            $bot = $this->Bots->patchEntity($bot,
+                array_merge($this->request->data, ['user_id' => $this->Auth->user('id')]));
             if ($this->Bots->save($bot)) {
                 $this->Flash->success(__('The bot has been saved.'));
 
