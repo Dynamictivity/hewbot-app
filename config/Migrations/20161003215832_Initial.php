@@ -80,6 +80,11 @@ class Initial extends AbstractMigration
                 'limit' => 255,
                 'null' => false,
             ])
+            ->addColumn('user_id', 'integer', [
+                'default' => null,
+                'limit' => 11,
+                'null' => false,
+            ])
             ->addColumn('bot_adapter_id', 'integer', [
                 'default' => null,
                 'limit' => 11,

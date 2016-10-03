@@ -19,7 +19,10 @@ class BotsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['BotAdapters']
+            'contain' => ['Users', 'BotAdapters'],
+            'conditions' => [
+                'Bots.user_id' => $this->Auth->user('id')
+            ]
         ];
         $bots = $this->paginate($this->Bots);
 
@@ -37,7 +40,7 @@ class BotsController extends AppController
     public function view($id = null)
     {
         $bot = $this->Bots->get($id, [
-            'contain' => ['BotAdapters', 'BotExternalScripts']
+            'contain' => ['Users', 'BotAdapters', 'BotExternalScripts']
         ]);
 
         $this->set('bot', $bot);
@@ -62,8 +65,9 @@ class BotsController extends AppController
                 $this->Flash->error(__('The bot could not be saved. Please, try again.'));
             }
         }
+        $users = $this->Bots->Users->find('list', ['limit' => 200]);
         $botAdapters = $this->Bots->BotAdapters->find('list', ['limit' => 200]);
-        $this->set(compact('bot', 'botAdapters'));
+        $this->set(compact('bot', 'users', 'botAdapters'));
         $this->set('_serialize', ['bot']);
     }
 
@@ -89,8 +93,9 @@ class BotsController extends AppController
                 $this->Flash->error(__('The bot could not be saved. Please, try again.'));
             }
         }
+        $users = $this->Bots->Users->find('list', ['limit' => 200]);
         $botAdapters = $this->Bots->BotAdapters->find('list', ['limit' => 200]);
-        $this->set(compact('bot', 'botAdapters'));
+        $this->set(compact('bot', 'users', 'botAdapters'));
         $this->set('_serialize', ['bot']);
     }
 

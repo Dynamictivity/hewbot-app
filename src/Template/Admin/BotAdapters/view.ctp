@@ -28,6 +28,7 @@
         <tr>
             <th scope="col"><?= __('Id') ?></th>
             <th scope="col"><?= __('Name') ?></th>
+            <th scope="col"><?= __('User Id') ?></th>
             <th scope="col"><?= __('Bot Adapter Id') ?></th>
             <th scope="col"><?= __('Hubot Slack Token') ?></th>
             <th scope="col"><?= __('Created') ?></th>
@@ -38,6 +39,7 @@
         <tr>
             <td><?= h($bots->id) ?></td>
             <td><?= h($bots->name) ?></td>
+            <td><?= h($bots->user_id) ?></td>
             <td><?= h($bots->bot_adapter_id) ?></td>
             <td><?= h($bots->hubot_slack_token) ?></td>
             <td><?= h($bots->created) ?></td>

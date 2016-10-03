@@ -9,6 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Bots Model
  *
+ * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \Cake\ORM\Association\BelongsTo $BotAdapters
  * @property \Cake\ORM\Association\HasMany $BotExternalScripts
  *
@@ -41,6 +42,10 @@ class BotsTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsTo('BotAdapters', [
             'foreignKey' => 'bot_adapter_id',
             'joinType' => 'INNER'
@@ -82,6 +87,7 @@ class BotsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['bot_adapter_id'], 'BotAdapters'));
 
         return $rules;

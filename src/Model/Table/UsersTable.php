@@ -41,6 +41,10 @@ class UsersTable extends Table
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->hasMany('Bots', [
+            'foreignKey' => 'user_id'
+        ]);
     }
 
     /**

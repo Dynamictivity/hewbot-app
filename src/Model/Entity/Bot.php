@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $name
+ * @property int $user_id
  * @property int $bot_adapter_id
  * @property string $hubot_slack_token
  * @property \Cake\I18n\Time $created
