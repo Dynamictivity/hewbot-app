@@ -17,6 +17,5 @@ docker-compose.yml
 /tmp/*
 /logs/*
 /config/Migrations/*.lock
-/webroot/files/
-/hewbot-docker/
-/rundeck/
+/hewbot-docker/*
+/rundeck/*

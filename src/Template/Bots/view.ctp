@@ -38,6 +38,6 @@
         </tr>
         <?php endforeach; ?>
     </table>
-    <?= $this->Html->link(__('Add Script'), ['controller' => 'External Scripts', 'action' => 'index']) ?>
     <?php endif; ?>
+    <?= $this->Html->link(__('Add Script'), ['controller' => 'External Scripts', 'action' => 'index']) ?>
 </div>

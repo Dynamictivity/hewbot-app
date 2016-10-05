@@ -1,0 +1,41 @@
+
+- description: ''
+  executionEnabled: true
+  id: be543f0b-7c04-4c62-aa4b-2bbd46a1f80d
+  loglevel: INFO
+  name: (Re)deploy
+  options:
+  - name: BOT_ID
+    required: true
+  - name: HUBOT_SLACK_TOKEN
+    required: true
+  scheduleEnabled: true
+  sequence:
+    commands:
+    - description: Remove existing work directory
+      script: |-
+        #!/bin/bash
+        rm -rf /home/vagrant/hewbot-work/${RD_OPTION_BOT_ID}
+    - description: Clone the repo into work directory
+      script: |-
+        #!/bin/bash
+        git clone https://github.com/Dynamictivity/hewbot-docker.git /home/vagrant/hewbot-work/${RD_OPTION_BOT_ID}
+    - description: Copy external scripts json
+      script: |-
+        #!/bin/bash
+        wget http://localhost/api/bots/scripts/${RD_OPTION_BOT_ID} -O /home/vagrant/hewbot-work/${RD_OPTION_BOT_ID}/hubot/external-scripts.json
+    - description: Build bot docker image
+      script: |-
+        #!/bin/bash
+        cd /home/vagrant/hewbot-work/${RD_OPTION_BOT_ID} && docker build -t hewbot-${RD_OPTION_BOT_ID} .
+    - description: Stop existing bot docker container
+      script: '#!/bin/bash'
+    - description: Deploy bot docker container
+      script: |-
+        #!/bin/bash
+        docker run -e HUBOT_SLACK_TOKEN=${RD_OPTION_HUBOT_SLACK_TOKEN} -d hewbot-${RD_OPTION_BOT_ID}
+    - description: Clean up orphaned images and containers
+      script: '#!/bin/bash'
+    keepgoing: false
+    strategy: node-first
+  uuid: be543f0b-7c04-4c62-aa4b-2bbd46a1f80d

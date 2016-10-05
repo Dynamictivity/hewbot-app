@@ -3,3 +3,4 @@
 # Sync source code
 mkdir /www
 rsync -vaz /source/* /www
+chmod -R 777 /www/tmp
