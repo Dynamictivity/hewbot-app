@@ -14,7 +14,13 @@ use Cake\Core\Configure;
 <br />
 <p>
     <h4>Welcome to hewbot.com!</h4>
-    Sign up to get your very own hand-crafted hosted hubot. If you don't know what hubot is, check out <a href="https://hubot.github.com/" target="_blank">https://hubot.github.com/</a>.
+    <center>
+        <strong><em>Watch this video to learn how Hewbot works</em></strong><br />
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/eWrJnMtHo9w" frameborder="0" allowfullscreen></iframe>
+    </center>
+</p>
+<p>
+  Sign up to get your very own hand-crafted hosted hubot. If you don't know what hubot is, check out <a href="https://hubot.github.com/" target="_blank">https://hubot.github.com/</a>.
 </p>
 <p>
     <h5><u>We are free and in alpha</u></h5>
