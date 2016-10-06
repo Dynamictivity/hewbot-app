@@ -1,6 +1,6 @@
 cakephp:
   autoredeploy: true
-  image: 'travisrowland/hewbot-app'
+  image: 'travisrowland/hewbot-app:latest'
   restart: always
   volumes:
     - /www
@@ -38,7 +38,9 @@ php:
     - EMAIL_TLS=True
     - EMAIL_USERNAME=support@dynamictivity.com
     - 'DYN_SITE_URL=http://hewbot.com'
-    - 'DYN_SITE_NAME=Hewbot.com'
+    - 'DYN_SITE_NAME=Hewbot.com (Alpha)'
+    - DYN_RUNDECK_APITOKEN=yyhWgTRIOuYkXmc6CqTouOSPi2JfLc5z
+    - 'DYN_RUNDECK_URL=http://localhost:4440'
     - RP_GOOGLE_ANALYTICS=UA-5187184-35
   expose:
     - '9000'

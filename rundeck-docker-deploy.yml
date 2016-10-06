@@ -4,7 +4,7 @@
   id: be543f0b-7c04-4c62-aa4b-2bbd46a1f80d
   loglevel: INFO
   multipleExecutions: true
-  name: (Re)deploy
+  name: Deploy
   options:
   - name: BOT_ID
     required: true
@@ -30,14 +30,14 @@
     - description: Stop and delete existing bot docker container
       script: |-
         #!/bin/bash
-        export CONTAINERID=$(docker ps -a | grep hewbot-1 | awk '{print $1}')
+        export CONTAINERID=$(docker ps -a | grep hewbot-${RD_OPTION_BOT_ID} | awk '{print $1}')
         docker stop $CONTAINERID || true
         docker rm $CONTAINERID || true
     - description: Deploy bot docker container and post containerid to application
       script: |-
         #!/bin/bash
         export HUBOT_SLACK_TOKEN=$(curl localhost/api/bots/slack/${RD_OPTION_BOT_ID})
-        export CONTAINERID=$(docker run -e HUBOT_SLACK_TOKEN=$HUBOT_SLACK_TOKEN -d hewbot-${RD_OPTION_BOT_ID})
+        export CONTAINERID=$(docker run -e HUBOT_SLACK_TOKEN=${HUBOT_SLACK_TOKEN} -d hewbot-${RD_OPTION_BOT_ID})
         curl -X POST -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data;" -F "containerid=${CONTAINERID}" "http://localhost/api/bots/container/${RD_OPTION_BOT_ID}"
     - description: Clean up orphaned images and containers
       script: |-

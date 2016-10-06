@@ -24,8 +24,7 @@ class BotExternalScriptsController extends AppController
             $botExternalScript = $this->BotExternalScripts->patchEntity($botExternalScript, $this->request->data);
             if ($this->BotExternalScripts->save($botExternalScript)) {
                 $this->Flash->success(__('The bot external script has been saved.'));
-
-                return $this->redirect(['controller' => 'bots', 'action' => 'view', $botExternalScript->bot_id]);
+                return $this->redirect(['controller' => 'bots', 'action' => 'deploy', $botExternalScript->bot_id]);
             } else {
                 $this->Flash->error(__('The bot external script could not be saved. Please, try again.'));
             }
@@ -60,6 +59,6 @@ class BotExternalScriptsController extends AppController
             $this->Flash->error(__('The bot external script could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['controller' => 'bots', 'action' => 'view', $botExternalScript->bot_id]);
+        return $this->redirect(['controller' => 'bots', 'action' => 'deploy', $botExternalScript->bot_id]);
     }
 }

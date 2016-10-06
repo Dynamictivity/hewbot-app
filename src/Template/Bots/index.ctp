@@ -15,6 +15,7 @@
             <td><?= $bot->has('bot_adapter') ? h($bot->bot_adapter->name) : '' ?></td>
             <td><?= h($bot->hubot_slack_token) ?></td>
             <td class="actions">
+                <?= $this->Html->link(__('Re-deploy'), ['action' => 'deploy', $bot->id]) ?>
                 <?= $this->Html->link(__('View'), ['action' => 'view', $bot->id]) ?>
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $bot->id]) ?>
                 <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $bot->id], ['confirm' => __('Are you sure you want to delete # {0}?', $bot->id)]) ?>

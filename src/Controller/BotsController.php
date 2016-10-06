@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
+use Cake\Network\Http\Client;
+use Cake\Core\Configure;
 
 /**
  * Bots Controller
@@ -60,16 +62,15 @@ class BotsController extends AppController
         $bot = $this->Bots->newEntity();
         $botCount = $this->Bots->find()->count();
         if ($botCount >= 1) {
-            $this->Flash->success(__('If you need additional bots, please send an e-mail to support@dynamictivity.com'));
+            $this->Flash->success(__('If you need additional bots, please send an e-mail to ' . Configure::read('dyn.support.email')));
             return $this->redirect(['action' => 'index']);
         }
         if ($this->request->is('post')) {
             $bot = $this->Bots->patchEntity($bot,
                 array_merge($this->request->data, ['user_id' => $this->Auth->user('id')]));
-            if ($this->Bots->save($bot)) {
+            if ($bot = $this->Bots->save($bot)) {
                 $this->Flash->success(__('The bot has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'deploy', $bot->id]);
             } else {
                 $this->Flash->error(__('The bot could not be saved. Please, try again.'));
             }
@@ -98,8 +99,7 @@ class BotsController extends AppController
             $bot = $this->Bots->patchEntity($bot, $this->request->data);
             if ($this->Bots->save($bot)) {
                 $this->Flash->success(__('The bot has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'deploy', $id]);
             } else {
                 $this->Flash->error(__('The bot could not be saved. Please, try again.'));
             }
@@ -123,12 +123,47 @@ class BotsController extends AppController
 
         $this->_validateOwnership($bot->user_id);
 
-        if ($this->Bots->delete($bot)) {
+        // Rundeck delete job
+        $response = $this->__callRundeck($id, 'delete');
+        if ($response->code == '200' && $this->Bots->delete($bot)) {
             $this->Flash->success(__('The bot has been deleted.'));
         } else {
             $this->Flash->error(__('The bot could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function deploy($id = null)
+    {
+        $bot = $this->Bots->get($id);
+        $this->_validateOwnership($bot->user_id);
+        // Rundeck deploy job
+        $response = $this->__callRundeck($id, 'deploy');
+        if ($response->code == '200') {
+            $this->Flash->success(__('The bot has been deployed.'));
+        } else {
+            $this->Flash->error(__('The bot could not be deployed. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+
+    private function __callRundeck($id, $job)
+    {
+        $jobs = [
+            'deploy' => 'be543f0b-7c04-4c62-aa4b-2bbd46a1f80d',
+            'delete' => '645703a1-c3eb-44d7-91f2-f023c2d2e63c'
+        ];
+        $jobId = $jobs[$job];
+        $http = new Client();
+        $jsonPayload = json_encode(['argString' => "-BOT_ID $id"]);
+        // Return response
+        return $http->post(Configure::read('dyn.rundeck.url') . "/api/1/job/$jobId/run", $jsonPayload,
+            ['headers' => [
+                'X-Rundeck-Auth-Token' => Configure::read('dyn.rundeck.apiToken'),
+                'Content-Type' => 'application/json',
+                'Cache-Control' => 'no-cache'
+            ]]);
     }
 }

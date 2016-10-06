@@ -1,0 +1,26 @@
+
+- description: ''
+  executionEnabled: true
+  id: 645703a1-c3eb-44d7-91f2-f023c2d2e63c
+  loglevel: INFO
+  multipleExecutions: true
+  name: Delete
+  options:
+  - name: BOT_ID
+    required: true
+  scheduleEnabled: true
+  sequence:
+    commands:
+    - description: Remove work directory (if exists)
+      script: |-
+        #!/bin/bash
+        rm -rf /home/vagrant/hewbot-work/${RD_OPTION_BOT_ID}
+    - description: Stop and delete existing bot docker container
+      script: |-
+        #!/bin/bash
+        export CONTAINERID=$(docker ps -a | grep hewbot-${RD_OPTION_BOT_ID} | awk '{print $1}')
+        docker stop $CONTAINERID || true
+        docker rm $CONTAINERID || true
+    keepgoing: false
+    strategy: node-first
+  uuid: 645703a1-c3eb-44d7-91f2-f023c2d2e63c

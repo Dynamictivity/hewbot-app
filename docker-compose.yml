@@ -32,8 +32,10 @@ services:
           EMAIL_PASSWORD: '2CpbYjFX9NUbRjUVzvu8hw' # Test key, replace with your own
           EMAIL_TLS: 'True'
           DYN_SITE_URL: 'http://localhost:8080'
-          DYN_SITE_NAME: 'Hewbot.com'
-          DYN_GOOGLE_ANALYTICS: 'UA-5187184-35'
+          DYN_SITE_NAME: 'Hewbot.com (Alpha)'
+          DYN_GOOGLE_ANALYTICS: 'UA-5187184-35' # Replace this with your own Google Analytics ID
+          DYN_RUNDECK_APITOKEN: 'yyhWgTRIOuYkXmc6CqTouOSPi2JfLc5z' # Replace this with your rundeck api token
+          DYN_RUNDECK_URL: 'http://localhost:4440'
     cakephp:
         # image: travisrowland/hewbot-app
         build: .
