@@ -95,6 +95,11 @@ class Initial extends AbstractMigration
                 'limit' => 255,
                 'null' => false,
             ])
+            ->addColumn('containerid', 'string', [
+                'default' => null,
+                'limit' => 255,
+                'null' => false,
+            ])
             ->addColumn('created', 'datetime', [
                 'default' => null,
                 'limit' => null,

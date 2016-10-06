@@ -11,6 +11,7 @@ use Cake\ORM\Entity;
  * @property int $user_id
  * @property int $bot_adapter_id
  * @property string $hubot_slack_token
+ * @property string $containerid
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  *

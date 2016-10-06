@@ -31,6 +31,7 @@
             <th scope="col"><?= __('User Id') ?></th>
             <th scope="col"><?= __('Bot Adapter Id') ?></th>
             <th scope="col"><?= __('Hubot Slack Token') ?></th>
+            <th scope="col"><?= __('Container ID') ?></th>
             <th scope="col"><?= __('Created') ?></th>
             <th scope="col"><?= __('Modified') ?></th>
             <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -42,6 +43,7 @@
             <td><?= h($bots->user_id) ?></td>
             <td><?= h($bots->bot_adapter_id) ?></td>
             <td><?= h($bots->hubot_slack_token) ?></td>
+            <td><?= h($bots->containerid) ?></td>
             <td><?= h($bots->created) ?></td>
             <td><?= h($bots->modified) ?></td>
             <td class="actions">

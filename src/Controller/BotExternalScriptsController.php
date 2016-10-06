@@ -14,9 +14,10 @@ class BotExternalScriptsController extends AppController
     /**
      * Add method
      *
+     * @param string|null $id External Script id.
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($id = null)
     {
         $botExternalScript = $this->BotExternalScripts->newEntity();
         if ($this->request->is('post')) {
@@ -37,7 +38,8 @@ class BotExternalScriptsController extends AppController
             ['order' => [
                 'ExternalScripts.name' => 'ASC'
             ]]);
-        $this->set(compact('botExternalScript', 'bots', 'externalScripts'));
+        $botExternalScript->external_script_id = $id;
+        $this->set(compact('botExternalScript', 'bots', 'externalScripts', 'botExternalScript'));
         $this->set('_serialize', ['botExternalScript']);
     }
 
