@@ -21,7 +21,7 @@ class UsersController extends \App\Controller\UsersController
     public function initialize()
     {
         parent::initialize();
-        $this->Auth->allow(['logout', 'add']);
+        $this->Auth->allow(['logout']);
     }
 
     /**
