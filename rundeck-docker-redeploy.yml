@@ -3,16 +3,15 @@
   executionEnabled: true
   id: be543f0b-7c04-4c62-aa4b-2bbd46a1f80d
   loglevel: INFO
+  multipleExecutions: true
   name: (Re)deploy
   options:
   - name: BOT_ID
     required: true
-  - name: HUBOT_SLACK_TOKEN
-    required: true
   scheduleEnabled: true
   sequence:
     commands:
-    - description: Remove existing work directory
+    - description: Remove work directory (if exists)
       script: |-
         #!/bin/bash
         rm -rf /home/vagrant/hewbot-work/${RD_OPTION_BOT_ID}
@@ -20,7 +19,7 @@
       script: |-
         #!/bin/bash
         git clone https://github.com/Dynamictivity/hewbot-docker.git /home/vagrant/hewbot-work/${RD_OPTION_BOT_ID}
-    - description: Copy external scripts json
+    - description: Copy external scripts json from application
       script: |-
         #!/bin/bash
         wget http://localhost/api/bots/scripts/${RD_OPTION_BOT_ID} -O /home/vagrant/hewbot-work/${RD_OPTION_BOT_ID}/hubot/external-scripts.json
@@ -28,14 +27,27 @@
       script: |-
         #!/bin/bash
         cd /home/vagrant/hewbot-work/${RD_OPTION_BOT_ID} && docker build -t hewbot-${RD_OPTION_BOT_ID} .
-    - description: Stop existing bot docker container
-      script: '#!/bin/bash'
-    - description: Deploy bot docker container
+    - description: Stop and delete existing bot docker container
       script: |-
         #!/bin/bash
-        docker run -e HUBOT_SLACK_TOKEN=${RD_OPTION_HUBOT_SLACK_TOKEN} -d hewbot-${RD_OPTION_BOT_ID}
+        export CONTAINERID=$(docker ps -a | grep hewbot-1 | awk '{print $1}')
+        docker stop $CONTAINERID || true
+        docker rm $CONTAINERID || true
+    - description: Deploy bot docker container and post containerid to application
+      script: |-
+        #!/bin/bash
+        export HUBOT_SLACK_TOKEN=$(curl localhost/api/bots/slack/${RD_OPTION_BOT_ID})
+        export CONTAINERID=$(docker run -e HUBOT_SLACK_TOKEN=$HUBOT_SLACK_TOKEN -d hewbot-${RD_OPTION_BOT_ID})
+        curl -X POST -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data;" -F "containerid=${CONTAINERID}" "http://localhost/api/bots/container/${RD_OPTION_BOT_ID}"
     - description: Clean up orphaned images and containers
-      script: '#!/bin/bash'
+      script: |-
+        #!/bin/bash
+        #docker rm $(docker ps -a -q) || true
+        #docker rmi $(docker images | awk '/^<none>/ { print $3 }') || true
+    - description: Remove work directory
+      script: |-
+        #!/bin/bash
+        rm -rf /home/vagrant/hewbot-work/${RD_OPTION_BOT_ID}
     keepgoing: false
     strategy: node-first
   uuid: be543f0b-7c04-4c62-aa4b-2bbd46a1f80d

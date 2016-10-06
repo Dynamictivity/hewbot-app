@@ -47,9 +47,10 @@ class BotExternalScriptsController extends \App\Controller\BotExternalScriptsCon
     /**
      * Add method
      *
+     * @param string|null $id External Script id.
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($id = null)
     {
         $botExternalScript = $this->BotExternalScripts->newEntity();
         if ($this->request->is('post')) {
