@@ -15,7 +15,6 @@ use Cake\Core\Configure;
         <li><?= $this->Html->link(__('Admin Interface'), ['controller' => 'Users', 'action' => 'index', 'prefix' => 'admin']) ?></li>
     <?php endif; ?>
 <?php else: ?>
-    <li class="heading"><?= Configure::read('dyn.site.name') ?></li>
     <li><?= $this->Html->link(__('Register'), ['controller' => 'Users', 'action' => 'register']) ?></li>
     <li><?= $this->Html->link(__('Login'), ['controller' => 'Users', 'action' => 'login']) ?></li>
     <li><?= $this->Html->link(__('Forgot Password'), ['controller' => 'Users', 'action' => 'reset']) ?></li>

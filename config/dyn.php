@@ -3,7 +3,7 @@ return [
     'dyn' => [
         'namespace' =>      'dyn',
         'site' => [
-            'name' =>       'Hewbot.com',
+            'name' =>       'Hewbot.com (Alpha)',
             'url' =>        env('DYN_SITE_URL', 'http://localhost:8765'),
         ],
         'rundeck' => [
