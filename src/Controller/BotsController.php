@@ -60,7 +60,11 @@ class BotsController extends AppController
     public function add()
     {
         $bot = $this->Bots->newEntity();
-        $botCount = $this->Bots->find()->count();
+        $botCount = $this->Bots->find()
+            ->where([
+                'Bots.user_id' => $this->Auth->user('id')
+            ])
+            ->count();
         if ($botCount >= 1) {
             $this->Flash->success(__('If you need additional bots, please send an e-mail to ' . Configure::read('dyn.support.email')));
             return $this->redirect(['action' => 'index']);
