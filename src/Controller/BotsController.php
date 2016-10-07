@@ -150,7 +150,7 @@ class BotsController extends AppController
             $this->Flash->error(__('The bot could not be deployed. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['controller' => 'Bots', 'action' => 'view', $bot->id]);
     }
 
     private function __callRundeck($id, $job)
