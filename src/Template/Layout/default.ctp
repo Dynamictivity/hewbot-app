@@ -61,6 +61,7 @@ use Cake\Core\Configure;
 </div>
 <footer>
 </footer>
+<script id='pp-cfp' data-env='beta' data-token='01e8a14275fc64b4cb780266cc05e33a9a8b9496e9e94079ad5d8710b4896504'>(function(d){var s=d.createElement('script'),c=d.createElement('link');s.src='https://beta.prodpad.com/static/js/prodpad-cfp.js';s.async=1;c.href='https://beta.prodpad.com/static/css/prodpad-cfp.css';c.rel='stylesheet';document.head.appendChild(c);document.head.appendChild(s);})(document);</script>
 <?= $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'); ?>
 <script>
     (function (i, s, o, g, r, a, m) {
