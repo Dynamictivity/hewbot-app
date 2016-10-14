@@ -4,6 +4,7 @@
         <tr>
             <th scope="col"><?= $this->Paginator->sort('id') ?></th>
             <th scope="col"><?= $this->Paginator->sort('name') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('is_public') ?></th>
             <th scope="col"><?= $this->Paginator->sort('created') ?></th>
             <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
             <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -14,6 +15,7 @@
         <tr>
             <td><?= $this->Number->format($externalScript->id) ?></td>
             <td><?= h($externalScript->name) ?></td>
+            <td><?= yn($externalScript->is_public) ?></td>
             <td><?= h($externalScript->created) ?></td>
             <td><?= h($externalScript->modified) ?></td>
             <td class="actions">

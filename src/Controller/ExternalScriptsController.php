@@ -22,6 +22,9 @@ class ExternalScriptsController extends AppController
             'contain' => [],
             'order' => [
                 'ExternalScripts.name' => 'ASC'
+            ],
+            'conditions' => [
+                'ExternalScripts.is_public' => true
             ]
         ];
 

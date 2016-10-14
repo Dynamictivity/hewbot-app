@@ -9,6 +9,10 @@
         <td><?= $this->Number->format($externalScript->id) ?></td>
     </tr>
     <tr>
+        <th scope="row"><?= __('is_public') ?></th>
+        <td><?= yn($externalScript->is_public) ?></td>
+    </tr>
+    <tr>
         <th scope="row"><?= __('Created') ?></th>
         <td><?= h($externalScript->created) ?></td>
     </tr>
